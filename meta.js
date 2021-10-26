@@ -86,6 +86,13 @@ module.exports = {
             ]
         },
 
+        datastorehost: {
+            when: 'isdatastore',
+            type: 'string',
+            message: 'Datastore host:',
+            default: "localhost"
+        },
+
         datastoreport: {
             when: 'isdatastore',
             type: 'number',
@@ -105,6 +112,13 @@ module.exports = {
             type: 'string',
             message: 'Datastore password:',
             default: ""
+        },
+
+        datastoretable: {
+            when: 'isdatastore',
+            type: 'string',
+            message: 'Datastore table:',
+            validate: val => val && val.length > 0
         },
 
         autoInstall: {
