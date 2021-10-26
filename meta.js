@@ -47,11 +47,27 @@ module.exports = {
         port: {
             type: 'number',
             message: 'Server port',
-            default : 4020,
+            default: 4020,
             validate: val => val && val > 0
         },
 
+        isdatastore: {
+            type: 'list',
+            message: 'Use to datastore:',
+            choices: [
+                {
+                    name: 'Yes, use datastore',
+                    value: true,
+                },
+                {
+                    name: 'No, not use datastore',
+                    value: false,
+                }
+            ]
+        },
+
         datastore: {
+            when : "isdatastore",
             type: 'list',
             message: 'Connect to datastore:',
             choices: [
@@ -71,51 +87,51 @@ module.exports = {
         },
 
         datastoreport: {
-            when: 'datastore == mysql',
+            when: 'isdatastore',
             type: 'number',
             message: 'Datastore port:',
-            default : 3306
+            default: 3306
         },
 
         username: {
-            when: 'datastore.mysql',
+            when: 'isdatastore',
             type: 'string',
             message: 'Datastore user name:',
-            default : "root"
+            default: "root"
         },
 
         password: {
-            when: 'datastore.mysql',
+            when: 'isdatastore',
             type: 'string',
             message: 'Datastore password:',
-            default : ""
+            default: ""
         },
 
         autoInstall: {
             type: 'list',
             message: 'Continue to install project dependencies after the project has been created? (recommended)',
             choices: [{
-                    name: 'Yes, use Yarn (recommended)',
-                    value: 'yarn',
-                    short: 'yarn',
-                },
-                {
-                    name: 'Yes, use NPM',
-                    value: 'npm',
-                    short: 'NPM',
-                },
-                {
-                    name: 'No, I will handle that myself',
-                    value: false,
-                    short: 'no',
-                }
+                name: 'Yes, use Yarn (recommended)',
+                value: 'yarn',
+                short: 'yarn',
+            },
+            {
+                name: 'Yes, use NPM',
+                value: 'npm',
+                short: 'NPM',
+            },
+            {
+                name: 'No, I will handle that myself',
+                value: false,
+                short: 'no',
+            }
             ]
         }
     },
 
     filters: {
 
-  
+
     },
 
 
