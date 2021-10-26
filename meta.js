@@ -71,21 +71,21 @@ module.exports = {
         },
 
         datastoreport: {
-            when: 'datastore.ms || datastore.mysql',
+            when: 'datastore === mysql',
             type: 'number',
             message: 'Datastore port:',
             default : 3306
         },
 
         username: {
-            when: 'datastore.ms || datastore.mysql',
+            when: 'datastore === mysql',
             type: 'string',
             message: 'Datastore user name:',
             default : "root"
         },
 
-        username: {
-            when: 'datastore.ms || datastore.mysql',
+        password: {
+            when: 'datastore === mysql',
             type: 'string',
             message: 'Datastore password:',
             default : ""
