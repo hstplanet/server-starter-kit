@@ -71,21 +71,21 @@ module.exports = {
         },
 
         datastoreport: {
-            when: 'datastore === mysql',
+            when: 'datastore.mysql',
             type: 'number',
             message: 'Datastore port:',
             default : 3306
         },
 
         username: {
-            when: 'datastore === mysql',
+            when: 'datastore.mysql',
             type: 'string',
             message: 'Datastore user name:',
             default : "root"
         },
 
         password: {
-            when: 'datastore === mysql',
+            when: 'datastore.mysql',
             type: 'string',
             message: 'Datastore password:',
             default : ""
