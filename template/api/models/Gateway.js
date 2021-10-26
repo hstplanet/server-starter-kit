@@ -1,0 +1,1 @@
+module.exports = { attributes: { apiKey : { type : 'string' },projectId : { type : 'string' },storageBucket : { type : 'string' },messagingSenderId : { type : 'string' },appId : { type : 'string' },measurementId : { type : 'string' }, }, };
