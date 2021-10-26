@@ -12,7 +12,7 @@ module.exports = {
         productName: {
             type: 'string',
             message: 'Project product name (must start with letter if building mobile apps)',
-            default: 'HSTCore App',
+            default: 'HST Cloud Server',
             validate: val => val && val.length > 0,
             transformer: escape
         },
@@ -20,7 +20,7 @@ module.exports = {
         description: {
             type: 'string',
             message: 'Project description',
-            default: 'A HSTCore Framework app',
+            default: 'A HST Cloud Framework Server',
             transformer: escape
         },
 
@@ -29,92 +29,7 @@ module.exports = {
             message: 'Author'
         },
 
-        css: {
-            type: 'list',
-            message: 'Pick your favorite CSS preprocessor: (can be changed later)',
-            default: 'scss',
-            choices: [{
-                    name: 'Sass with SCSS syntax (recommended)',
-                    value: 'scss',
-                    short: 'SCSS'
-                },
-                {
-                    name: 'Sass with indented syntax (recommended)',
-                    value: 'sass',
-                    short: 'Sass'
-                },
-                {
-                    name: 'Stylus (deprecated)',
-                    value: 'stylus'
-                },
-                {
-                    name: 'None (the others will still be available)',
-                    value: 'none',
-                    short: 'None'
-                }
-            ]
-        },
-
-        importStrategy: {
-            type: 'list',
-            message: 'Pick a HST components & directives import strategy: (can be changed later)',
-            choices: [{
-                    name: '* Auto-import in-use HST components & directives\n    - also treeshakes HST; minimum bundle size',
-                    value: 'auto',
-                    short: 'Auto import',
-                    checked: true
-                },
-                {
-                    name: '* Import everything from HST\n    - not treeshaking HST; biggest bundle size',
-                    value: 'all',
-                    short: 'Import everything'
-                }
-            ]
-        },
-
-        preset: {
-            type: 'checkbox',
-            message: 'Check the features needed for your project:',
-            choices: [
-                {
-                    name: 'ESLint (recommended)',
-                    value: 'lint',
-                    checked: true
-                },
-                {
-                    name: 'TypeScript',
-                    value: 'typescript'
-                },
-                {
-                    name: 'Vuex',
-                    value: 'vuex'
-                },
-                {
-                    name: 'Axios',
-                    value: 'axios'
-                },
-                {
-                    name: 'HSTCore',
-                    value: 'hstcore'
-                },
-                {
-                    name: 'Login System',
-                    value: 'loginsystem'
-                },
-                {
-                    name: 'Vue-i18n',
-                    value: 'i18n'
-                },
-                {
-                    name: 'Firebase',
-                    value: 'firebase'
-                },
-
-            ]
-        },
-
         hstcloud: {
-            when: 'preset.hstcore',
             type: 'list',
             message: 'Connect to HST Cloud project:',
             choices: [
@@ -129,55 +44,51 @@ module.exports = {
             ]
         },
 
-        project: {
-            when: 'hstcloud === "existing"',
-            type: 'list',
-            message: 'Select HST Cloud project:',
-            choices: []
+        port: {
+            type: 'number',
+            message: 'Server port',
+            default : 4020,
+            validate: val => val && val > 0
         },
 
-        typescriptConfig: {
-            when: 'preset.typescript',
+        datastore: {
             type: 'list',
-            message: 'Pick a component style:',
-            choices: [{
-                    name: 'Composition API (recommended) (https://github.com/vuejs/composition-api)',
-                    value: 'composition',
-                    short: 'Composition',
+            message: 'Connect to datastore:',
+            choices: [
+                {
+                    name: 'MYSQL',
+                    value: 'mysql',
                 },
                 {
-                    name: 'Class-based (recommended) (https://github.com/vuejs/vue-class-component & https://github.com/kaorun343/vue-property-decorator)',
-                    value: 'class',
-                    short: 'Class',
+                    name: 'MSSQL',
+                    value: 'ms',
                 },
                 {
-                    name: 'Options API',
-                    value: 'options',
-                    short: 'options',
+                    name: 'Local Disk',
+                    value: 'local',
                 }
             ]
         },
 
-        lintConfig: {
-            when: 'preset.lint',
-            type: 'list',
-            message: 'Pick an ESLint preset:',
-            choices: [{
-                    name: 'Prettier (https://github.com/prettier/prettier)',
-                    value: 'prettier',
-                    short: 'Prettier'
-                },
-                {
-                    name: 'Standard (https://github.com/standard/standard)',
-                    value: 'standard',
-                    short: 'Standard',
-                },
-                {
-                    name: 'Airbnb (https://github.com/airbnb/javascript)',
-                    value: 'airbnb',
-                    short: 'Airbnb',
-                }
-            ]
+        datastoreport: {
+            when: 'datastore.ms || datastore.mysql',
+            type: 'number',
+            message: 'Datastore port:',
+            default : 3306
+        },
+
+        username: {
+            when: 'datastore.ms || datastore.mysql',
+            type: 'string',
+            message: 'Datastore user name:',
+            default : "root"
+        },
+
+        username: {
+            when: 'datastore.ms || datastore.mysql',
+            type: 'string',
+            message: 'Datastore password:',
+            default : ""
         },
 
         autoInstall: {
@@ -203,55 +114,8 @@ module.exports = {
     },
 
     filters: {
-        // ESlint files
-        '.eslintignore': 'preset.lint',
-        '.eslintrc.js': 'preset.lint',
 
-        // Default files when not using TypeScript
-        'jsconfig.json': '!preset.typescript',
-        'src/router/*.js': '!preset.typescript',
-
-        // Presets files when not using TypeScript
-        'src/boot/axios.js': 'preset.axios && !preset.typescript',
-        'src/boot/i18n.js': 'preset.i18n && !preset.typescript',
-        'src/i18n/**/*.js': 'preset.i18n && !preset.typescript',
-        'src/store/**/*.js': 'preset.vuex && !preset.typescript',
-
-        // HST Core
-        'hst.conf.js': 'preset.hstcore',
-        'src/boot/Core/**/*.js': 'preset.hstcore',
-
-
-        // Loging
-        'src/layouts/LoginLayout.vue': 'preset.loginsystem',
-        'src/pages/Login/**/*.vue': 'preset.loginsystem',
-
-        // TypeScript files
-        '.prettierrc': `preset.lint && preset.typescript && lintConfig === 'prettier'`,
-        'tsconfig.json': 'preset.typescript',
-        'src/env.d.ts': 'preset.typescript',
-        'src/shims-vue.d.ts': 'preset.typescript',
-        'src/components/CompositionComponent.vue': `preset.typescript && typescriptConfig === 'composition'`,
-        'src/components/ClassComponent.vue': `preset.typescript && typescriptConfig === 'class'`,
-        'src/components/OptionsComponent.vue': `preset.typescript && typescriptConfig === 'options'`,
-        'src/components/models.ts': `preset.typescript`,
-
-        // Default files using TypeScript
-        'src/router/*.ts': 'preset.typescript',
-
-        // Presets files using TypeScript
-        'src/boot/axios.ts': 'preset.axios && preset.typescript',
-        'src/boot/composition-api.ts': `preset.typescript && typescriptConfig === 'composition'`,
-        'src/boot/i18n.ts': 'preset.i18n && preset.typescript',
-        'src/i18n/**/*.ts': 'preset.i18n && preset.typescript',
-        'src/store/**/*.ts': 'preset.vuex && preset.typescript',
-
-        // CSS preprocessors
-        '.stylintrc': `preset.lint && css === 'stylus'`,
-        'src/css/*.styl': `css === 'stylus'`,
-        'src/css/*.scss': `css === 'scss'`,
-        'src/css/*.sass': `css === 'sass'`,
-        'src/css/app.css': `css === 'none'`,
+  
     },
 
 
