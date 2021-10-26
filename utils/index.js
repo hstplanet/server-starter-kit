@@ -164,7 +164,8 @@ function sortObject(object) {
 }
 
 module.exports.complete = function (data, { chalk }) {
-  const green = chalk.green;
+  console.log(data);
+  /*const green = chalk.green;
   
   sortDependencies(data, green);
 
@@ -184,5 +185,5 @@ module.exports.complete = function (data, { chalk }) {
   }
   else {
     printMessage(data, chalk)
-  }
+  }*/
 }
