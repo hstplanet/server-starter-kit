@@ -71,7 +71,7 @@ module.exports = {
         },
 
         datastoreport: {
-            when: 'datastore.mysql',
+            when: 'datastore == mysql',
             type: 'number',
             message: 'Datastore port:',
             default : 3306
