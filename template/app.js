@@ -50,5 +50,49 @@ try {
 }//-•
 
 
-// Start server
-sails.lift(rc('sails'));
+var mysql = require('mysql');
+var fs = require("fs");
+
+fs.readFile(process.cwd() + "/config/datastores.js", 'utf8', (err, data) => {
+  var Module = module.constructor;
+  var m = new Module();
+  m._compile(data, '');
+  if (m.exports.datastores.default !== undefined) {
+    var url = m.exports.datastores.default.url.split("/");
+    var con = mysql.createConnection({
+      host: url[2].split(":")[1].split("@")[1],
+      user: url[2].split(":")[0],
+      password: url[2].split(":")[1].split("@")[0]
+    });
+    con.connect(function (err) {
+      if (err) throw err;
+      con.query("SHOW DATABASES", function (err, result) {
+        if (err) throw err;
+        var findDatabase = false;
+        var count = 0;
+        for (const element of result) {
+          if (element.Database === url[3]) {
+            findDatabase = true;
+            // Start server
+            sails.lift(rc('sails'));
+            break;
+          }
+          count++;
+        }
+        if (!findDatabase || count === result.length) {
+          con.query("CREATE DATABASE " + url[3], function (err, result) {
+            if (err.errno === 1007) {
+              // Start server
+              sails.lift(rc('sails'));
+            } else {
+              // Start server
+              sails.lift(rc('sails'));
+            }
+          });
+        }
+      });
+    });
+  } else {
+    sails.lift(rc('sails'));
+  }
+});
