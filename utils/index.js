@@ -168,7 +168,7 @@ module.exports.complete = function (data, { chalk }) {
   
   sortDependencies(data, green);
 
-  const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
+  const cwd = path.join(".." , process.cwd(), data.inPlace ? '' : data.destDirName)
 
   if (data.autoInstall) {
     installDependencies(cwd, data.autoInstall, green)
