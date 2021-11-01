@@ -11,8 +11,7 @@ const lintStyles = ['standard', 'airbnb', 'prettier']
  * @param {object} data Data from questionnaire
  */
 function sortDependencies(data) {
-    const pkgFile = path.join(
-        data.inPlace ? '' : data.destDirName,
+    const pkgFile = path.join(path.join(process.cwd() , "../../") , data.destDirName, 
         'package.json'
     )
     let sorted = false
