@@ -90,7 +90,7 @@ To get started:
   ${yellow(
     `${data.inPlace ? '' : `cd ${data.destDirName}\n  `}${installMsg(
       data
-    )}${lintMsg(data)}hst dev || npm run dev`
+    )}${lintMsg(data)}npm start`
   )}
 
 Documentation can be found at: https://hstplanet.com
