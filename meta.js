@@ -119,27 +119,6 @@ module.exports = {
             type: 'string',
             message: 'Datastore table:',
             validate: val => val && val.length > 0
-        },
-
-        autoInstall: {
-            type: 'list',
-            message: 'Continue to install project dependencies after the project has been created? (recommended)',
-            choices: [{
-                name: 'Yes, use Yarn (recommended)',
-                value: 'yarn',
-                short: 'yarn',
-            },
-            {
-                name: 'Yes, use NPM',
-                value: 'npm',
-                short: 'NPM',
-            },
-            {
-                name: 'No, I will handle that myself',
-                value: false,
-                short: 'no',
-            }
-            ]
         }
     },
 
