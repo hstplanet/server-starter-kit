@@ -11,12 +11,13 @@ const lintStyles = ['standard', 'airbnb', 'prettier']
  * @param {object} data Data from questionnaire
  */
 function sortDependencies(data) {
-    const pkgFile = path.join(path.join(process.cwd() , "../../") , data.destDirName, 
+    const pkgFile = path.join(
+        data.inPlace ? '' : data.destDirName,
         'package.json'
     )
     let sorted = false
 
-    const pkg = JSON.parse(fs.readFileSync(pkgFile))
+   /* const pkg = JSON.parse(fs.readFileSync(pkgFile))
 
     if (pkg.dependencies) {
         sorted = true
@@ -29,7 +30,7 @@ function sortDependencies(data) {
 
     if (sorted) {
         fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + '\n')
-    }
+    }*/
 }
 
 /**
