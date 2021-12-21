@@ -165,6 +165,10 @@ without necessarily having a billing card.`
             type: 'string',
             description: 'phone',
         },
+
+        city : { type: 'string' },
+        town : { type: 'string' },
+        address  : { type: 'string' },
         
         name: { type: 'string' },
         lastname: { type: 'string' },
@@ -173,7 +177,7 @@ without necessarily having a billing card.`
         lang : { type: 'string' },
         try: { type: 'boolean', defaultsTo: true },
 
-        userData : { type: 'json' },
+        profile : { model: 'profile' },
     },
 
 

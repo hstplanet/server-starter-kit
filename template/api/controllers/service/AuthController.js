@@ -126,16 +126,29 @@ module.exports = {
                     data.fullName = data.name + " " + data.lastname;
                 }
 
+                if (req.body.city !== undefined && req.body.city.length > 0) {
+                    data.city = req.body.city;
+                }
+
+                if (req.body.town !== undefined && req.body.town.length > 0) {
+                    data.town = req.body.town;
+                }
+
+                if (req.body.address !== undefined && req.body.address.length > 0) {
+                    data.address = req.body.address;
+                }
+
                 if (req.body.phone !== undefined && req.body.phone.length > 0) {
                     data.phone = req.body.phone;
                 }
 
-                if (req.body.photoURL !== undefined && req.body.name.photoURL > 0) {
+                if (req.body.photoURL !== undefined) {
                     data.photoURL = req.body.photoURL;
                 }
 
-                if (req.body.userData !== undefined) {
-                    data.userData = req.body.userData;
+                if (req.body.profile !== undefined) {
+                    var profile = req.body.profile;
+                    await Profile.update({id : profile.id}).set(profile).fetch();
                 }
 
                 var newUserRecord = await User.updateOne({
@@ -145,7 +158,7 @@ module.exports = {
 
                 req.session.userId = newUserRecord.id;
 
-                res.json({ code: "auth-update-ok", message: "Profil başarıyla güncellendi." });
+                res.json({ code: "auth-update-ok", message: "Profil başarıyla güncellendi." , user : newUserRecord });
             } else {
                 res.json({ err: true, code: "auth-update-nok", message: "Kullanıcı bulunamadı." });
             }
