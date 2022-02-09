@@ -48,7 +48,8 @@ module.exports = {
             type: 'string',
             message: 'Server host',
             default: "localhost",
-            validate: val => val && val > 0
+            validate: val => val && val.length > 0,
+            transformer: escape
         },
 
         port: {
