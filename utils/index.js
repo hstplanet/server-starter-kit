@@ -165,32 +165,24 @@ function sortObject(object) {
 
 module.exports.complete = function (data, { chalk }) {
   const green = chalk.green;
-  let uid = "";
-  for (let index = 0; index < 10; index++) {
-    uid += Math.floor(Math.random() * 9) + 1;
-    if (index == 9) {
-      data.projectId = data.name + "-" + uid
-      console.log("ProjectId", data.projectId);
-      sortDependencies(data, green);
+  
+  sortDependencies(data, green);
 
-      const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
+  const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
 
-      if (data.autoInstall) {
-        installDependencies(cwd, data.autoInstall, green)
-          .then(() => {
-            return runLintFix(cwd, data, green)
-          })
-          .then(() => {
-            printMessage(data, green)
-          })
-          .catch(e => {
-            console.log(chalk.red('Error:'), e)
-          })
-      }
-      else {
-        printMessage(data, chalk)
-      }
-    }
+  if (data.autoInstall) {
+    installDependencies(cwd, data.autoInstall, green)
+      .then(() => {
+        return runLintFix(cwd, data, green)
+      })
+      .then(() => {
+        printMessage(data, green)
+      })
+      .catch(e => {
+        console.log(chalk.red('Error:'), e)
+      })
   }
-
+  else {
+    printMessage(data, chalk)
+  }
 }
