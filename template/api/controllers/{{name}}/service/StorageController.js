@@ -17,7 +17,7 @@ module.exports = {
                     type: uploadedFiles[0].type,
                     size: uploadedFiles[0].size,
                     ref: referans[referans.length - 1].split(".")[0],
-                    url: require('util').format('%s/{{projectId}}/service/storage/download/%s?%s', serverURL, referans[referans.length - 1].split(".")[0], uploadedFiles[0].type),
+                    url: require('util').format('%s/{{name}}-{{projectId}}/service/storage/download/%s?%s', serverURL, referans[referans.length - 1].split(".")[0], uploadedFiles[0].type),
                     userID: req_userID
                 }).fetch();
                 if (Record) {
