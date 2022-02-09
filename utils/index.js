@@ -11,26 +11,26 @@ const lintStyles = ['standard', 'airbnb', 'prettier']
  * @param {object} data Data from questionnaire
  */
 function sortDependencies(data) {
-    const pkgFile = path.join(
-        data.inPlace ? '' : data.destDirName,
-        'package.json'
-    )
-    let sorted = false
+  const pkgFile = path.join(
+    data.inPlace ? '' : data.destDirName,
+    'package.json'
+  )
+  let sorted = false
 
-   /* const pkg = JSON.parse(fs.readFileSync(pkgFile))
+  /* const pkg = JSON.parse(fs.readFileSync(pkgFile))
 
-    if (pkg.dependencies) {
-        sorted = true
-        pkg.dependencies = sortObject(pkg.dependencies)
-    }
-    if (pkg.devDependencies) {
-        sorted = true
-        pkg.devDependencies = sortObject(pkg.devDependencies)
-    }
+   if (pkg.dependencies) {
+       sorted = true
+       pkg.dependencies = sortObject(pkg.dependencies)
+   }
+   if (pkg.devDependencies) {
+       sorted = true
+       pkg.devDependencies = sortObject(pkg.devDependencies)
+   }
 
-    if (sorted) {
-        fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + '\n')
-    }*/
+   if (sorted) {
+       fs.writeFileSync(pkgFile, JSON.stringify(pkg, null, 2) + '\n')
+   }*/
 }
 
 /**
@@ -39,8 +39,8 @@ function sortDependencies(data) {
  * @param {object} data Data from questionnaire
  */
 function installDependencies(cwd, executable = 'npm', color) {
-    console.log(`\n\n ${color('[*] Installing project dependencies ...')}\n`)
-    return runCommand(executable, ['install'], { cwd })
+  console.log(`\n\n ${color('[*] Installing project dependencies ...')}\n`)
+  return runCommand(executable, ['install'], { cwd })
 }
 
 /**
@@ -49,19 +49,19 @@ function installDependencies(cwd, executable = 'npm', color) {
  * @param {object} data Data from questionnaire
  */
 function runLintFix(cwd, data, color) {
-    if (data.preset.lint && lintStyles.indexOf(data.lintConfig) !== -1) {
-        console.log(
-            `\n\n ${color(
+  if (data.preset.lint && lintStyles.indexOf(data.lintConfig) !== -1) {
+    console.log(
+      `\n\n ${color(
         '[*] Running eslint --fix to comply with chosen preset rules...'
       )}\n\n`
-        )
-        const args =
-            data.autoInstall === 'npm' ? ['run', 'lint', '--', '--fix'] : ['run', 'lint', '--fix']
-        return runCommand(data.autoInstall, args, {
-            cwd,
-        })
-    }
-    return Promise.resolve()
+    )
+    const args =
+      data.autoInstall === 'npm' ? ['run', 'lint', '--', '--fix'] : ['run', 'lint', '--fix']
+    return runCommand(data.autoInstall, args, {
+      cwd,
+    })
+  }
+  return Promise.resolve()
 }
 
 /**
@@ -70,11 +70,11 @@ function runLintFix(cwd, data, color) {
  * @param {Object} data Data from questionnaire.
  */
 function lintMsg(data) {
-    return !data.autoInstall &&
-        data.lint &&
-        lintStyles.indexOf(data.lintConfig) !== -1 ?
-        'npm run lint -- --fix (or for yarn: yarn run lint --fix)\n  ' :
-        ''
+  return !data.autoInstall &&
+    data.lint &&
+    lintStyles.indexOf(data.lintConfig) !== -1 ?
+    'npm run lint -- --fix (or for yarn: yarn run lint --fix)\n  ' :
+    ''
 }
 
 /**
@@ -82,7 +82,7 @@ function lintMsg(data) {
  * @param {Object} data Data from questionnaire.
  */
 function printMessage(data, { green, yellow }) {
-    const message = `
+  const message = `
  ${green('[*] HST Project initialization finished!')}
 
 To get started:
@@ -165,7 +165,11 @@ function sortObject(object) {
 
 module.exports.complete = function (data, { chalk }) {
   const green = chalk.green;
-  
+  let uid = "";
+  for (let index = 0; index < 10; index++) {
+    uid += Math.floor(Math.random() * 9) + 1;
+  }
+  data.name = data.name + "-" + uid
   sortDependencies(data, green);
 
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
