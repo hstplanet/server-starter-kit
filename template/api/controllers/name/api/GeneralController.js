@@ -5,7 +5,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-const orm = require('../Functions/Orm');
+const orm = require('../../Functions/Orm');
 
 module.exports = {
 
