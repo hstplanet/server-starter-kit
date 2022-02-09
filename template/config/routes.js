@@ -9,7 +9,7 @@
  */
 
 module.exports.routes = {
-    'GET /{{name}}/service/storage/download/:id' : '{{name}}/service/StorageController.download',
+    'GET /{{projectId}}/service/storage/download/:id' : '{{name}}/service/StorageController.download',
     'POST /{{name}}/service/storage/upload/:id' : '{{name}}/service/StorageController.upload',
 
     'GET /{{name}}/service/currency/get': '{{name}}/service/StorageController.get',
