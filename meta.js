@@ -44,6 +44,13 @@ module.exports = {
             ]
         },
 
+        host: {
+            type: 'string',
+            message: 'Server host',
+            default: "localhost",
+            validate: val => val && val > 0
+        },
+
         port: {
             type: 'number',
             message: 'Server port',
@@ -67,7 +74,7 @@ module.exports = {
         },
 
         datastore: {
-            when : "isdatastore",
+            when: "isdatastore",
             type: 'list',
             message: 'Connect to datastore:',
             choices: [
@@ -127,7 +134,7 @@ module.exports = {
 
     },
 
-    
+
 
     complete
 };
