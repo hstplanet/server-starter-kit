@@ -165,11 +165,18 @@ function sortObject(object) {
 
 module.exports.complete = function (data, { chalk }) {
   const green = chalk.green;
-  
+
   sortDependencies(data, green);
 
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
-  console.log("path : " , cwd);
+  const renamePath = cwd + "/api/controllers"
+  fs.rename(renamePath + "/{{name}}", renamePath + "/" + data.name + "-" + data.projectId, function (err) {
+    if (err) {
+      console.log(err)
+    } else {
+      console.log("Successfully renamed the directory.")
+    }
+  })
   if (data.autoInstall) {
     installDependencies(cwd, data.autoInstall, green)
       .then(() => {
