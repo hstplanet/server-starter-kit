@@ -169,7 +169,9 @@ module.exports.complete = function (data, { chalk }) {
   sortDependencies(data, green);
 
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
-  const renamePath = cwd + "/api/controllers"
+  let renamePath = path.join(cwd, '../../');
+  renamePath = path.join(renamePath, "server/api/controllers")
+  console.log("Path : ", renamePath);
   fs.rename(renamePath + "/{{name}}", renamePath + "/" + data.name + "-" + data.projectId, function (err) {
     if (err) {
       console.log(err)
