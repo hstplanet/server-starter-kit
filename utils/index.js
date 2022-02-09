@@ -169,7 +169,7 @@ module.exports.complete = function (data, { chalk }) {
   for (let index = 0; index < 10; index++) {
     uid += Math.floor(Math.random() * 9) + 1;
   }
-  data.name = data.name + "-" + uid
+  data.projectId = data.name + "-" + uid
   sortDependencies(data, green);
 
   const cwd = path.join(process.cwd(), data.inPlace ? '' : data.destDirName)
