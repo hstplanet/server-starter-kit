@@ -172,6 +172,7 @@ module.exports.complete = function (data, { chalk }) {
   let renamePath = path.join(cwd, '../../');
   renamePath = path.join(renamePath, "server/api/controllers")
   console.log("Path : ", renamePath);
+  console.log(data);
   fs.rename(renamePath + "/{{name}}", renamePath + "/" + data.name + "-" + data.projectId, function (err) {
     if (err) {
       console.log(err)
